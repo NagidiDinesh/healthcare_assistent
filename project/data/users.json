@@ -1,0 +1,82 @@
+{
+  "e20065b1-9b35-4dc0-9796-78d5467cfee6": {
+    "name": "havyamsh",
+    "email": "havyamshp@gmail.com",
+    "phone": "7330742295",
+    "gender": "male",
+    "age": 21,
+    "password_hash": "pbkdf2:sha256:600000$4WhVMvb3EMyDwyqc$afec7ecfc3e2bf6d0e736b28b6c4ebf6c26df404dde58215d5f5521452b658a4",
+    "created_at": "2025-08-22T12:31:10.155186",
+    "points": 40
+  },
+  "502957f4-03b3-43ee-9094-73bfc5d301f5": {
+    "name": "navya",
+    "email": "navya@gmaiil.com",
+    "phone": "123456789",
+    "gender": "female",
+    "age": 20,
+    "password_hash": "pbkdf2:sha256:600000$eI7XAZfAcqvfuSDB$59ff8c16696ac9c66a39e28b9a7f83754833c7b3f25271933c9b5e14fa26a821",
+    "created_at": "2025-08-22T13:06:46.238849",
+    "points": 0
+  },
+  "e56bf567-3741-4413-9531-da0f1ba36451": {
+    "name": "havyamsh maruthai",
+    "email": "hav@gmail.com",
+    "phone": "07330742295",
+    "gender": "male",
+    "age": 28,
+    "password_hash": "pbkdf2:sha256:600000$Yv4fMt9wdbW5BDLx$5493867680f4721aec7aa57f57f3d4c35999e319096fea351cee4d29e829593c",
+    "created_at": "2025-08-22T17:36:47.773045",
+    "points": 190
+  },
+  "7f972167-39e5-4570-8e5d-e099d3cc98d1": {
+    "name": "nagurbee",
+    "email": "havv@gmail.com",
+    "phone": "7330742295",
+    "gender": "male",
+    "age": 21,
+    "password_hash": "pbkdf2:sha256:600000$fCzPOALOfdnx2QvF$d807d29e67906b58757ee6c50a87b21c603d9c484080da2b5fe62c949430b265",
+    "created_at": "2025-08-22T18:49:20.272018",
+    "points": 30
+  },
+  "e6865ab1-4129-4658-adb7-061eacefff80": {
+    "name": "NAGIDI DINESH",
+    "email": "dineshnagidi05@gmail.com",
+    "phone": "8367647840",
+    "gender": "male",
+    "age": 20,
+    "password_hash": "pbkdf2:sha256:600000$PxGJwG8cRXnPEvwv$6743eadbcb1edc07f36acfc39f1cc0208870b40ac2edec0362ecd60172d282b4",
+    "created_at": "2025-09-04T12:01:36.138974",
+    "points": 80
+  },
+  "633f462a-8725-4130-9f24-6157b174ab47": {
+    "name": "Jupaka Hyni susanna",
+    "email": "hyni.susanna@gmail.com",
+    "phone": "6281406726",
+    "gender": "female",
+    "age": 19,
+    "password_hash": "pbkdf2:sha256:600000$xgR7ONj5akAfwwTd$a8461de0e3dfb99d4af6bbb7b4cafeffa9bea42abfd7bc075948a0d7a1a9b816",
+    "created_at": "2025-09-05T09:45:44.791533",
+    "points": 30
+  },
+  "7e070426-5bfc-4671-8492-b055ce3c9eef": {
+    "name": "balu",
+    "email": "24kn5a6101@gmail.com",
+    "phone": "8143815233",
+    "gender": "male",
+    "age": 20,
+    "password_hash": "pbkdf2:sha256:600000$XCvuG46BssHyr4R2$3052636ff27a511c7a51ab021abe9aa3a0cc031e04145652abaab8a1cfc27d67",
+    "created_at": "2025-09-05T11:10:07.630432",
+    "points": 40
+  },
+  "33eac3d6-4d74-45e0-b58a-3e8091b4ab50": {
+    "name": "sai",
+    "email": "venkatasai@gmail.com",
+    "phone": "8367647840",
+    "gender": "male",
+    "age": 21,
+    "password_hash": "pbkdf2:sha256:600000$GibLOAQsp0KWg5lJ$fedfc02b53c95088319c934b0290bdb5ace1552dbe073a39b722266bef10aff1",
+    "created_at": "2025-09-06T10:35:08.041595",
+    "points": 60
+  }
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Healthcare Assistant</title>
+    <link rel="icon" href="D:\healthcare_Assist-main\heart.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        {% if session.user_id %}
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthAssist</span>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="{{ url_for('assistant') }}" class="nav-link">
+                    <i class="fas fa-robot"></i> Assistant
+                </a>
+                <a href="{{ url_for('chat') }}" class="nav-link">
+                    <i class="fas fa-comments"></i> Chat
+                </a>
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="main-content">
+        <div class="chat-page">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <div class="chat-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="chat-info">
+                            <h2>Health Assistant Chat</h2>
+                            <p>Get personalized health advice and support</p>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn btn-secondary btn-small" onclick="clearChat()">
+                            <i class="fas fa-broom"></i>
+                            Clear Chat
+                        </button>
+                        <button class="btn btn-primary btn-small" onclick="toggleVoice()" id="voiceBtn">
+                            <i class="fas fa-microphone"></i>
+                            Voice
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message assistant-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                Hello! I'm your AI health assistant. I can help you with health-related questions, provide personalized advice based on your health data, and support you on your wellness journey. How can I assist you today?
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <form id="chatForm" class="chat-input-form">
+                        <div class="input-wrapper">
+                            <textarea 
+                                id="messageInput" 
+                                placeholder="Type your health question or concern here..." 
+                                rows="1"
+                                maxlength="1000"></textarea>
+                            <div class="input-actions">
+                                <button type="button" class="input-action" onclick="toggleVoice()" title="Voice Input">
+                                    <i class="fas fa-microphone" id="micIcon"></i>
+                                </button>
+                                <button type="submit" class="input-action send-btn" id="sendBtn" title="Send Message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="input-footer">
+                            <span class="char-count">0/1000</span>
+                            <span class="disclaimer">Always consult healthcare professionals for serious medical concerns.</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Recording Modal -->
+        <div class="modal" id="voiceModal" style="display: none;">
+            <div class="modal-content voice-modal">
+                <div class="voice-recording">
+                    <div class="voice-animation">
+                        <div class="voice-circle"></div>
+                        <div class="voice-pulse"></div>
+                    </div>
+                    <h3>Listening...</h3>
+                    <p>Speak your health question or concern</p>
+                    <div class="voice-actions">
+                        <button class="btn btn-secondary" onclick="stopVoiceInput()">
+                            <i class="fas fa-stop"></i>
+                            Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-message"></span>
+            <button class="notification-close" onclick="hideNotification()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

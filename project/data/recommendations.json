@@ -1,0 +1,79 @@
+{
+  "e56bf567-3741-4413-9531-da0f1ba36451": {
+    "recommendations": {
+      "diet": [
+        "Increase healthy caloric intake",
+        "Include protein-rich foods in every meal",
+        "Add healthy fats like nuts and avocados"
+      ],
+      "exercise": [],
+      "lifestyle": []
+    },
+    "generated_at": "2025-08-22T18:52:18.990242"
+  },
+  "7f972167-39e5-4570-8e5d-e099d3cc98d1": {
+    "recommendations": {
+      "diet": [
+        "Reduce caloric intake by 300-500 calories per day",
+        "Increase fiber intake with whole grains and vegetables",
+        "Limit processed foods and added sugars",
+        "Reduce sodium intake to less than 2300mg per day",
+        "Increase potassium-rich foods like bananas and spinach"
+      ],
+      "exercise": [
+        "30 minutes of cardio exercise 5 times per week",
+        "Include strength training 2-3 times per week"
+      ],
+      "lifestyle": [
+        "Practice stress management techniques",
+        "Ensure 7-8 hours of quality sleep"
+      ]
+    },
+    "generated_at": "2025-08-22T18:50:31.263546"
+  },
+  "e6865ab1-4129-4658-adb7-061eacefff80": {
+    "recommendations": {
+      "diet": [],
+      "exercise": [],
+      "lifestyle": []
+    },
+    "generated_at": "2025-09-06T09:34:19.575749"
+  },
+  "633f462a-8725-4130-9f24-6157b174ab47": {
+    "recommendations": {
+      "diet": [
+        "Reduce caloric intake by 300-500 calories per day",
+        "Increase fiber intake with whole grains and vegetables",
+        "Limit processed foods and added sugars"
+      ],
+      "exercise": [
+        "30 minutes of cardio exercise 5 times per week",
+        "Include strength training 2-3 times per week"
+      ],
+      "lifestyle": []
+    },
+    "generated_at": "2025-09-05T10:07:12.987827"
+  },
+  "7e070426-5bfc-4671-8492-b055ce3c9eef": {
+    "recommendations": {
+      "diet": [
+        "Reduce sodium intake to less than 2300mg per day",
+        "Increase potassium-rich foods like bananas and spinach"
+      ],
+      "exercise": [],
+      "lifestyle": [
+        "Practice stress management techniques",
+        "Ensure 7-8 hours of quality sleep"
+      ]
+    },
+    "generated_at": "2025-09-05T11:13:34.575114"
+  },
+  "33eac3d6-4d74-45e0-b58a-3e8091b4ab50": {
+    "recommendations": {
+      "diet": [],
+      "exercise": [],
+      "lifestyle": []
+    },
+    "generated_at": "2025-09-06T12:51:45.583175"
+  }
+}

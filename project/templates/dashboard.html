@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Healthcare Assistant</title>
+    <link rel="icon" href="D:\healthcare_Assist-main\heart.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        {% if session.user_id %}
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthAssist</span>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="{{ url_for('assistant') }}" class="nav-link">
+                    <i class="fas fa-robot"></i> Assistant
+                </a>
+                <a href="{{ url_for('chat') }}" class="nav-link">
+                    <i class="fas fa-comments"></i> Chat
+                </a>
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-page">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Health Dashboard</h1>
+                    <p>Monitor your health metrics and track your progress</p>
+                </div>
+
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" onclick="showHealthDataForm()">
+                        <i class="fas fa-plus"></i>
+                        Update Health Data
+                    </button>
+                    <button class="btn btn-secondary" onclick="showProfileForm()">
+                        <i class="fas fa-user-edit"></i>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Health Metrics Cards -->
+                    <div class="dashboard-section">
+                        <h2>Health Metrics</h2>
+                        <div class="metrics-grid" id="metricsGrid">
+                            <!-- Metrics will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Health Charts -->
+                    <div class="dashboard-section">
+                        <h2>Health Trends</h2>
+                        <div class="charts-container">
+                            <div class="chart-card">
+                                <h3>Blood Pressure Trend</h3>
+                                <canvas id="bpChart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h3>Weight & BMI Trend</h3>
+                                <canvas id="weightChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Information -->
+                    <div class="dashboard-section">
+                        <h2>Profile Information</h2>
+                        <div class="profile-card" id="profileCard">
+                            <!-- Profile info will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Data Modal -->
+        <div class="modal" id="healthDataModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Update Health Data</h3>
+                    <button class="modal-close" onclick="closeModal('healthDataModal')">&times;</button>
+                </div>
+                <form id="healthDataForm" class="modal-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" step="0.1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" name="height" min="50" max="300">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="blood_pressure_systolic">Systolic BP</label>
+                            <input type="number" id="blood_pressure_systolic" name="blood_pressure_systolic" min="50" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label for="blood_pressure_diastolic">Diastolic BP</label>
+                            <input type="number" id="blood_pressure_diastolic" name="blood_pressure_diastolic" min="30" max="200">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="heart_rate">Heart Rate (bpm)</label>
+                            <input type="number" id="heart_rate" name="heart_rate" min="30" max="250">
+                        </div>
+                        <div class="form-group">
+                            <label for="glucose_level">Glucose Level (mg/dL)</label>
+                            <input type="number" id="glucose_level" name="glucose_level" min="50" max="500">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="activity_level">Activity Level</label>
+                            <select id="activity_level" name="activity_level">
+                                <option value="">Select Activity Level</option>
+                                <option value="sedentary">Sedentary</option>
+                                <option value="light">Light Activity</option>
+                                <option value="moderate">Moderate Activity</option>
+                                <option value="active">Active</option>
+                                <option value="very_active">Very Active</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alcohol_intake">Alcohol Intake</label>
+                            <select id="alcohol_intake" name="alcohol_intake">
+                                <option value="">Select Frequency</option>
+                                <option value="never">Never</option>
+                                <option value="occasionally">Occasionally</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="daily">Daily</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="symptoms">Current Symptoms (optional)</label>
+                        <textarea id="symptoms" name="symptoms" rows="3" placeholder="Describe any current symptoms..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('healthDataModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Health Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Profile Edit Modal -->
+        <div class="modal" id="profileModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Profile</h3>
+                    <button class="modal-close" onclick="closeModal('profileModal')">&times;</button>
+                </div>
+                <form id="profileForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="profile_name">Full Name</label>
+                        <input type="text" id="profile_name" name="name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profile_age">Age</label>
+                            <input type="number" id="profile_age" name="age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile_phone">Phone Number</label>
+                            <input type="tel" id="profile_phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="current_password">Current Password (to change password)</label>
+                        <input type="password" id="current_password" name="current_password">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password" minlength="6">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('profileModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-message"></span>
+            <button class="notification-close" onclick="hideNotification()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

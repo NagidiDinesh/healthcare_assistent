@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Healthcare Assistant{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    <div class="welcome-section">
+        <div class="container">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h1>Welcome back, {{ user.name }}!</h1>
+                    <p>Here's your health overview for today</p>
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value">{{ user.points or 0 }}</span>
+                                <span class="stat-label">Points</span>
+                            </div>
+                        </div>
+                        {% if health_data.risk_level %}
+                        <div class="stat-item">
+                            <div class="stat-icon risk-{{ health_data.risk_level.lower() }}">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value">{{ health_data.risk_level }}</span>
+                                <span class="stat-label">Risk Level</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <a href="{{ url_for('assistant') }}" class="quick-action">
+                        <i class="fas fa-robot"></i>
+                        <span>Health Assistant</span>
+                    </a>
+                    <a href="{{ url_for('chat') }}" class="quick-action">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat</span>
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="quick-action">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if health_data %}
+    <div class="health-overview-section">
+        <div class="container">
+            <h2 class="section-title">Your Health Overview</h2>
+            <div class="health-cards">
+                {% if health_data.blood_pressure_systolic %}
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3>Blood Pressure</h3>
+                    </div>
+                    <div class="card-value">
+                        {{ health_data.blood_pressure_systolic }}/{{ health_data.blood_pressure_diastolic or '80' }}
+                        <span class="unit">mmHg</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if health_data.heart_rate %}
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Heart Rate</h3>
+                    </div>
+                    <div class="card-value">
+                        {{ health_data.heart_rate }}
+                        <span class="unit">bpm</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if health_data.glucose_level %}
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3>Glucose Level</h3>
+                    </div>
+                    <div class="card-value">
+                        {{ health_data.glucose_level }}
+                        <span class="unit">mg/dL</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if health_data.weight and health_data.height %}
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <h3>BMI</h3>
+                    </div>
+                    <div class="card-value">
+                        {% set bmi = (health_data.weight | float) / (((health_data.height | float) / 100) ** 2) %}
+                        {{ "%.1f" | format(bmi) }}
+                        <span class="unit">kg/m²</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if recommendations %}
+    <div class="recommendations-section">
+        <div class="container">
+            <h2 class="section-title">Personalized Recommendations</h2>
+            <div class="recommendations-grid">
+                {% if recommendations.diet %}
+                <div class="recommendation-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Diet Recommendations</h3>
+                    </div>
+                    <ul class="recommendation-list">
+                        {% for item in recommendations.diet[:3] %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if recommendations.exercise %}
+                <div class="recommendation-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h3>Exercise Recommendations</h3>
+                    </div>
+                    <ul class="recommendation-list">
+                        {% for item in recommendations.exercise[:3] %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if recommendations.lifestyle %}
+                <div class="recommendation-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Lifestyle Tips</h3>
+                    </div>
+                    <ul class="recommendation-list">
+                        {% for item in recommendations.lifestyle[:3] %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h3>Need Health Guidance?</h3>
+                    <p>Chat with our AI health assistant for personalized advice and support.</p>
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary">
+                        <i class="fas fa-comments"></i>
+                        Start Chat
+                    </a>
+                </div>
+                <div class="cta-image">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

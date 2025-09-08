@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="D:\healthcare_Assist-main\heart.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <i class="fas fa-heartbeat"></i> HealthAssist
+            </a>
+            <div class="nav-toggle">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links">
+                {% if 'user_id' in session %}
+                    <a href="{{ url_for('home') }}" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                    <a href="{{ url_for('dashboard') }}" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a>
+                    <a href="{{ url_for('assistant') }}" class="nav-link"><i class="fas fa-robot"></i> Assistant</a>
+                    <a href="{{ url_for('chat') }}" class="nav-link"><i class="fas fa-comments"></i> Chat</a>
+                    <a href="{{ url_for('logout') }}" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('signup') }}" class="nav-link"><i class="fas fa-user-plus"></i> Signup</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-message"></span>
+            <button class="notification-close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+</body>
+</html>

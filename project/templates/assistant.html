@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant - Healthcare Assistant</title>
+   <link rel="icon" href="D:\healthcare_Assist-main\heart.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        {% if session.user_id %}
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>HealthAssist</span>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="{{ url_for('assistant') }}" class="nav-link">
+                    <i class="fas fa-robot"></i> Assistant
+                </a>
+                <a href="{{ url_for('chat') }}" class="nav-link">
+                    <i class="fas fa-comments"></i> Chat
+                </a>
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        {% endif %}
+    </nav>
+
+    <main class="main-content">
+        <div class="assistant-page">
+            <div class="container">
+                <div class="assistant-header">
+                    <div class="assistant-intro">
+                        <div class="assistant-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="assistant-text">
+                            <h1>Personal Health Assistant</h1>
+                            <p>Your AI-powered health companion for personalized recommendations and health monitoring</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assistant-sections">
+                    <!-- Health Data Collection -->
+                    <div class="assistant-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-heartbeat"></i>
+                                Health Data Collection
+                            </h2>
+                            <p>Update your health metrics for personalized recommendations</p>
+                        </div>
+                        <div class="section-content">
+                            <div class="quick-metrics">
+                                <div class="metric-input">
+                                    <label>Weight (kg)</label>
+                                    <input type="number" id="quickWeight" placeholder="Enter weight">
+                                </div>
+                                <div class="metric-input">
+                                    <label>Blood Pressure</label>
+                                    <div class="bp-inputs">
+                                        <input type="number" id="quickSystolic" placeholder="120">
+                                        <span>/</span>
+                                        <input type="number" id="quickDiastolic" placeholder="80">
+                                    </div>
+                                </div>
+                                <div class="metric-input">
+                                    <label>Heart Rate (bpm)</label>
+                                    <input type="number" id="quickHeartRate" placeholder="70">
+                                </div>
+                                <div class="metric-input">
+                                    <label>Glucose (mg/dL)</label>
+                                    <input type="number" id="quickGlucose" placeholder="90">
+                                </div>
+                            </div>
+                            <div class="section-actions">
+                                <button class="btn btn-primary" onclick="saveQuickHealth()">
+                                    <i class="fas fa-save"></i>
+                                    Save Health Data
+                                </button>
+                                <button class="btn btn-secondary" onclick="showDetailedHealthForm()">
+                                    <i class="fas fa-list"></i>
+                                    Detailed Entry
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Assessment -->
+                    <div class="assistant-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-shield-alt"></i>
+                                Health Risk Assessment
+                            </h2>
+                            <p>AI-powered analysis of your health risks and concerns</p>
+                        </div>
+                        <div class="section-content">
+                            <div class="risk-assessment" id="riskAssessment">
+                                <div class="risk-placeholder">
+                                    <i class="fas fa-chart-line"></i>
+                                    <p>Complete your health data to get a personalized risk assessment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personalized Recommendations -->
+                    <div class="assistant-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-lightbulb"></i>
+                                Personalized Recommendations
+                            </h2>
+                            <p>Custom diet and exercise plans based on your health profile</p>
+                        </div>
+                        <div class="section-content">
+                            <div class="recommendations-tabs">
+                                <button class="tab-button active" onclick="showTab('diet')">
+                                    <i class="fas fa-utensils"></i>
+                                    Diet Plan
+                                </button>
+                                <button class="tab-button" onclick="showTab('exercise')">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Exercise Plan
+                                </button>
+                                <button class="tab-button" onclick="showTab('lifestyle')">
+                                    <i class="fas fa-leaf"></i>
+                                    Lifestyle Tips
+                                </button>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="dietTab">
+                                    <div class="recommendations-list" id="dietRecommendations">
+                                        <div class="recommendation-placeholder">
+                                            <i class="fas fa-utensils"></i>
+                                            <p>Complete your health assessment to get personalized diet recommendations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="exerciseTab">
+                                    <div class="recommendations-list" id="exerciseRecommendations">
+                                        <div class="recommendation-placeholder">
+                                            <i class="fas fa-dumbbell"></i>
+                                            <p>Complete your health assessment to get personalized exercise recommendations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="lifestyleTab">
+                                    <div class="recommendations-list" id="lifestyleRecommendations">
+                                        <div class="recommendation-placeholder">
+                                            <i class="fas fa-leaf"></i>
+                                            <p>Complete your health assessment to get personalized lifestyle tips</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptoms Analysis -->
+                    <div class="assistant-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-stethoscope"></i>
+                                Symptom Analysis
+                            </h2>
+                            <p>Describe your symptoms for AI-powered health insights</p>
+                        </div>
+                        <div class="section-content">
+                            <div class="symptom-form">
+                                <textarea 
+                                    id="symptomsInput" 
+                                    placeholder="Describe any symptoms you're experiencing... (e.g., headache, fatigue, chest pain)"
+                                    rows="4"></textarea>
+                                <div class="symptom-actions">
+                                    <button class="btn btn-primary" onclick="analyzeSymptoms()">
+                                        <i class="fas fa-search"></i>
+                                        Analyze Symptoms
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="clearSymptoms()">
+                                        <i class="fas fa-eraser"></i>
+                                        Clear
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="symptom-results" id="symptomResults" style="display: none;">
+                                <div class="analysis-content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Report Upload -->
+                    <div class="assistant-section">
+                        <div class="section-header">
+                            <h2>
+                                <i class="fas fa-file-medical"></i>
+                                Medical Report Analysis
+                            </h2>
+                            <p>Upload medical reports for AI-powered analysis and insights</p>
+                        </div>
+                        <div class="section-content">
+                            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Upload Medical Report</h3>
+                                <p>Drag and drop files here or click to browse</p>
+                                <small>Supported formats: PDF, JPG, PNG (Max 16MB)</small>
+                                <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(event)">
+                            </div>
+                            <div class="uploaded-files" id="uploadedFiles"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Health Data Modal -->
+        <div class="modal" id="detailedHealthModal">
+            <div class="modal-content large-modal">
+                <div class="modal-header">
+                    <h3>Detailed Health Assessment</h3>
+                    <button class="modal-close" onclick="closeModal('detailedHealthModal')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="detailedHealthForm" class="detailed-form">
+                        <!-- Basic Metrics -->
+                        <div class="form-section">
+                            <h4>Basic Metrics</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Weight (kg)</label>
+                                    <input type="number" name="weight" step="0.1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Height (cm)</label>
+                                    <input type="number" name="height">
+                                </div>
+                                <div class="form-group">
+                                    <label>Body Temperature (°F)</label>
+                                    <input type="number" name="body_temperature" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vital Signs -->
+                        <div class="form-section">
+                            <h4>Vital Signs</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Systolic BP</label>
+                                    <input type="number" name="blood_pressure_systolic">
+                                </div>
+                                <div class="form-group">
+                                    <label>Diastolic BP</label>
+                                    <input type="number" name="blood_pressure_diastolic">
+                                </div>
+                                <div class="form-group">
+                                    <label>Heart Rate (bpm)</label>
+                                    <input type="number" name="heart_rate">
+                                </div>
+                                <div class="form-group">
+                                    <label>Respiratory Rate</label>
+                                    <input type="number" name="respiratory_rate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lab Values -->
+                        <div class="form-section">
+                            <h4>Laboratory Values</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Glucose (mg/dL)</label>
+                                    <input type="number" name="glucose_level">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cholesterol (mg/dL)</label>
+                                    <input type="number" name="cholesterol">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hemoglobin (g/dL)</label>
+                                    <input type="number" name="hemoglobin" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lifestyle Factors -->
+                        <div class="form-section">
+                            <h4>Lifestyle Factors</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Activity Level</label>
+                                    <select name="activity_level">
+                                        <option value="">Select</option>
+                                        <option value="sedentary">Sedentary</option>
+                                        <option value="light">Light Activity</option>
+                                        <option value="moderate">Moderate Activity</option>
+                                        <option value="active">Active</option>
+                                        <option value="very_active">Very Active</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sleep Hours/Night</label>
+                                    <input type="number" name="sleep_hours" min="0" max="24">
+                                </div>
+                                <div class="form-group">
+                                    <label>Alcohol Intake</label>
+                                    <select name="alcohol_intake">
+                                        <option value="">Select</option>
+                                        <option value="never">Never</option>
+                                        <option value="occasionally">Occasionally</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="daily">Daily</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Smoking Status</label>
+                                    <select name="smoking_status">
+                                        <option value="">Select</option>
+                                        <option value="never">Never Smoked</option>
+                                        <option value="former">Former Smoker</option>
+                                        <option value="current">Current Smoker</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Family History & Symptoms -->
+                        <div class="form-section">
+                            <h4>Additional Information</h4>
+                            <div class="form-group">
+                                <label>Family History</label>
+                                <textarea name="family_history" placeholder="Any relevant family medical history..." rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Current Symptoms</label>
+                                <textarea name="symptoms" placeholder="Describe any current symptoms..." rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Current Medications</label>
+                                <textarea name="medications" placeholder="List current medications and supplements..." rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('detailedHealthModal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Complete Assessment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-message"></span>
+            <button class="notification-close" onclick="hideNotification()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/assistant.js') }}"></script>
+</body>
+</html>
